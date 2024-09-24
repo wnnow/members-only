@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=title%></title>
+  </head>
+  <body>
+    <%- include('navbar') %>
+    <h1>Sign Up</h1>
+    <form action="/signup" method="POST">
+      <div>
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" require />
+      </div>
+      <div>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" require />
+      </div>
+      <div>
+        <label for="username">Email (Username):</label>
+        <input type="email" id="username" name="username" require />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" require />
+      </div>
+      <div>
+        <label for="confirm_password">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          require
+        />
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <% if(error) { %>
+    <p style="color: red"><%=error%></p>
+    <% } %>
+    <p>Already have an account? <a href="/login">Login here</a></p>
+    <%- include('footer') %>
+  </body>
+</html>
