@@ -14,6 +14,7 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   expressSession({
@@ -37,10 +38,10 @@ app.use(authMiddleware);
 
 app.use((req, res, next) => {
   console.log(req.session);
-  console.log("req.user: ", req.user);
-  console.log("req.isUser: ", req.isUser);
-  console.log("req.isMember: ", req.isMember);
-  console.log("req.isAdmin: ", req.isAdmin);
+  // console.log("req.user: ", req.user);
+  // console.log("req.isUser: ", req.isUser);
+  // console.log("req.isMember: ", req.isMember);
+  // console.log("req.isAdmin: ", req.isAdmin);
 
   next();
 });

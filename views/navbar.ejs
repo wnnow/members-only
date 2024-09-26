@@ -6,6 +6,14 @@
     <% if (locals.user) { %>
     <!-- Check if user is logged in -->
     <div class="navbar-links">
+      <button id="post-message-toggle-btn" type="button">Post</button>
+    </div>
+
+    <div class="navbar-links">
+      <button type="button">Update Membership</button>
+    </div>
+
+    <div class="navbar-links">
       <a href="/logout">Logout</a>
     </div>
     <% } else { %>
@@ -13,6 +21,7 @@
     <div class="navbar-links">
       <a href="/login">Login</a>
     </div>
+
     <div class="navbar-links">
       <a href="/signup">Sign Up</a>
     </div>

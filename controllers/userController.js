@@ -16,11 +16,6 @@ async function signUpPost(req, res, next) {
   const { first_name, last_name, username, password, confirm_password } =
     req.body;
 
-  console.log(first_name);
-  console.log(last_name);
-  console.log(username);
-  console.log(password);
-
   const formattedFirstName = validateFormData.toProperCase(first_name);
   const formattedLastName = validateFormData.toProperCase(last_name);
   const formattedUsername = username.toLowerCase();

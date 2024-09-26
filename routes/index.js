@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
 const pgPool = require("../database/pool");
 const userController = require("../controllers/userController");
+const messageController = require("../controllers/messageController");
 const { validateSignUp } = require("../validators/validators");
 
 // TODO
@@ -28,6 +29,7 @@ router.post("/signup", validateSignUp, userController.signUpPost);
 // if invalid redirect to '/member-failure'
 router.post("/member", (req, res, next) => {});
 
+router.delete("/delete-msg/:id", messageController.deleteMessage);
 // TODO
 // get route
 
@@ -37,12 +39,11 @@ router.post("/member", (req, res, next) => {});
 // navbar include post-message upgrade-member for user
 // navbar include post-message upgrade-member for member (upgrade member include upgrade to admin)
 // if(admin) can delete message
-router.get("/", (req, res, next) => {
-  res.render("index", { title: "Home", user: req.user });
-});
+router.get("/", messageController.getMessages);
 
 //create form login page
 router.get("/login", userController.loginGet);
+
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) {
