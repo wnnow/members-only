@@ -28,36 +28,6 @@ JOIN
   }
 }
 
-async function updateMembership(id, membershipResult) {
-  try {
-    await pgPool.query(
-      `
-      UPDATE users
-      SET membership_status = $2
-      WHERE id = $1`,
-      [id, membershipResult]
-    );
-    console.log(`update success`);
-  } catch (err) {
-    console.error("Error occurred while updateMembership controller: ", err);
-  }
-}
-
-async function updateAdmin(id, adminResult) {
-  try {
-    await pgPool.query(
-      `
-      UPDATE users
-      SET is_admin = $2
-      WHERE id = $1`,
-      [id, adminResult]
-    );
-    console.log(`update success`);
-  } catch (err) {
-    console.error("Error occurred while updateMembership controller: ", err);
-  }
-}
-
 async function deleteMessage(id) {
   if (id) {
     try {
@@ -85,8 +55,7 @@ async function insertMessage(title, text, creator_id) {
 module.exports = {
   getAllMessage,
   getMessagesAndUserInfo,
-  updateMembership,
-  updateAdmin,
+
   deleteMessage,
   insertMessage,
 };

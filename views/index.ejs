@@ -71,14 +71,47 @@
         </form>
       </div>
     </div>
-
-    <% if(locals.user && locals.user.is_admin) { %>
-    <div id="deleteConfirmationModal" class="modal">
+    <% if(locals.user && !locals.user.membership_status) { %>
+    <div id="join-member-status-modal" class="modal">
+      <div class="modal-content">
+        <form action="/member" method="POST">
+          <h2>Become a members</h2>
+          <label for="membership_status">Secret Code:</label>
+          <input
+            type="password"
+            name="membership_status"
+            id="membership_status"
+          />
+          <div class="modal-buttons">
+            <button type="submit" id="confirm-join-member-btn">Submit</button>
+            <button type="button" id="cancel-join-member-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <% } %> <% if(locals.user && locals.user.membership_status) { %>
+    <div id="cancel-member-status-modal" class="modal">
+      <div class="modal-content">
+        <h2>Are you sure you want to cancel membership?</h2>
+        <div class="modal-buttons">
+          <button
+            data-id="<%= locals.user.id %>"
+            type="submit"
+            id="confirm-canceling-member-btn"
+          >
+            Yes
+          </button>
+          <button type="button" id="cancel-canceling-member-btn">No</button>
+        </div>
+      </div>
+    </div>
+    <% } %> <% if(locals.user && locals.user.is_admin) { %>
+    <div id="delete-confirmation-modal" class="modal">
       <div class="modal-content">
         <h2>Are you sure you want to delete this message?</h2>
         <div class="modal-buttons">
-          <button id="confirmDeleteBtn">OK</button>
-          <button id="cancelBtn">Cancel</button>
+          <button id="confirm-delete-btn">Yes</button>
+          <button id="cancel-btn">No</button>
         </div>
       </div>
     </div>

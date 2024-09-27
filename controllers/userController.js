@@ -3,6 +3,17 @@ const bcrypt = require("bcryptjs");
 const validateFormData = require("../utils/validateFormData");
 const { validationResult } = require("express-validator");
 
+function signUpGet(req, res, next) {
+  res.render("signup", { title: "Sign up", error: null });
+}
+
+function loginGet(req, res, next) {
+  if (req.user) {
+    res.redirect("/");
+  }
+  res.render("login", { title: "Log in", error: null });
+}
+
 async function signUpPost(req, res, next) {
   const errors = validationResult(req);
 
@@ -40,32 +51,27 @@ async function signUpPost(req, res, next) {
   }
 }
 
-// async function loginPost(req, res, next) {
-//   const { username, password } = req.body;
-//   try {
-//     const user = await db.getUser(username)
-//     if(!user) {
+async function cancelMembershipPut(req, res) {
+  try {
+    console.log("cancel req.user.id: === ", req.user.id);
+    console.log("cancel req.params === ", req.params);
 
-//     }
-//   } catch (err) {
-//     console.error("Error occurred while login", err);
-//     res.render("login", { title: "Login", error: err });
-//   }
-// }
-
-function signUpGet(req, res, next) {
-  res.render("signup", { title: "Sign up", error: null });
-}
-
-function loginGet(req, res, next) {
-  if (req.user) {
-    res.redirect("/");
+    const { id } = req.params;
+    if (req.user.id === parseInt(id)) {
+      console.log("user id match");
+      await db.updateMembership(id, false);
+    }
+    console.log("cancel member successful");
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("Error occur while canceling membership");
+    res.status(500).json({ success: false, message: "An error occurred" });
   }
-  res.render("login", { title: "Log in", error: null });
 }
 
 module.exports = {
   signUpPost,
   signUpGet,
   loginGet,
+  cancelMembershipPut,
 };

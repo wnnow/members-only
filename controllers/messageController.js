@@ -27,7 +27,7 @@ async function deleteMessage(req, res) {
 async function addMessage(req, res) {
   try {
     const { title, text } = req.body;
-    // console.log(req.user.id);
+
     await db.insertMessage(title, text, req.user.id);
     res.redirect("/");
   } catch (err) {

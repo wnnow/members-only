@@ -3,95 +3,117 @@ document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("postMessageModal");
   const closeBtn = document.querySelector(".close-btn");
 
-  postButton.addEventListener("click", () => {
-    modal.style.display = "block";
-  });
+  if (postButton && modal && closeBtn) {
+    postButton.addEventListener("click", () => {
+      modal.style.display = "block";
+    });
 
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
-  // When the user clicks outside the modal content, close the modal
-  window.addEventListener("click", (event) => {
-    if (event.target === modal) {
+    closeBtn.addEventListener("click", () => {
       modal.style.display = "none";
-    }
-  });
+    });
+
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
 });
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   const deleteButtons = document.querySelectorAll(".delete-btn");
-//   const modal = document.getElementById("deleteConfirmationModal");
-//   const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-//   const cancelBtn = document.getElementById("cancelBtn");
-
-//   let messageIdToBeDelete = null;
-
-//   deleteButtons.forEach((button) => {
-//     button.addEventListener("click", () => {
-//       messageIdToBeDelete = button.getAttribute("data-id");
-//       modal.style.display = "block";
-//     });
-//   });
-
-//   confirmDeleteBtn.addEventListener("click", async () => {
-//     if (messageIdToBeDelete) {
-//       try {
-//         const response = await (fetch(`/delete-msg/${messageIdToBeDelete}`),
-//         { method: DELETE });
-//         if (response.ok) {
-//           window.location.reload();
-//         }
-//         console.log("click");
-//       } catch (err) {
-//         console.error("Error deleting message:", err);
-//       }
-//     }
-//     modal.style.display = "none";
-//   });
-
-//   cancelBtn.addEventListener("click", () => {
-//     modal.style.display = "none";
-//   });
-// });
 document.addEventListener("DOMContentLoaded", () => {
   const deleteButtons = document.querySelectorAll(".delete-btn");
-  const modal = document.getElementById("deleteConfirmationModal");
-  const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-  const cancelBtn = document.getElementById("cancelBtn");
+  const modal = document.getElementById("delete-confirmation-modal");
+  const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+  const cancelBtn = document.getElementById("cancel-btn");
 
-  let messageIdToDelete = null;
+  if (modal && confirmDeleteBtn && cancelBtn) {
+    let messageIdToDelete = null;
 
-  // Handle click event on delete buttons
-  deleteButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      messageIdToDelete = button.getAttribute("data-id");
-      modal.style.display = "flex"; // Show the modal
-    });
-  });
-
-  // Handle the confirmation click (OK button)
-  confirmDeleteBtn.addEventListener("click", async () => {
-    if (messageIdToDelete) {
-      try {
-        // Send a DELETE request to your server
-        const response = await fetch(`/delete-msg/${messageIdToDelete}`, {
-          method: "DELETE",
+    deleteButtons.forEach((button) => {
+      if (button) {
+        button.addEventListener("click", () => {
+          messageIdToDelete = button.getAttribute("data-id");
+          modal.style.display = "flex";
         });
-        console.log("delete success");
-        console.log(response);
+      }
+    });
+
+    confirmDeleteBtn.addEventListener("click", async () => {
+      if (messageIdToDelete) {
+        try {
+          const response = await fetch(`/delete-msg/${messageIdToDelete}`, {
+            method: "DELETE",
+          });
+          if (response.ok) {
+            window.location.reload();
+          }
+        } catch (error) {
+          console.error("Error deleting message:", error);
+        }
+      }
+      modal.style.display = "none";
+    });
+
+    cancelBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cancelToggleMemberBtn = document.getElementById(
+    "cancel-member-toggle-btn"
+  );
+  const cancelMemberModal = document.getElementById(
+    "cancel-member-status-modal"
+  );
+  const confirmCanceling = document.getElementById(
+    "confirm-canceling-member-btn"
+  );
+  const cancelCancellingMemberBtn = document.getElementById(
+    "cancel-canceling-member-btn"
+  );
+
+  if (
+    cancelToggleMemberBtn &&
+    cancelMemberModal &&
+    confirmCanceling &&
+    cancelCancellingMemberBtn
+  ) {
+    const userIdToUpdate = confirmCanceling.getAttribute("data-id");
+
+    cancelToggleMemberBtn.addEventListener("click", () => {
+      cancelMemberModal.style.display = "block";
+    });
+
+    cancelCancellingMemberBtn.addEventListener("click", () => {
+      cancelMemberModal.style.display = "none";
+    });
+
+    confirmCanceling.addEventListener("click", async () => {
+      try {
+        const response = await fetch(`/cancel-member/${userIdToUpdate}`, {
+          method: "PUT",
+        });
         if (response.ok) {
-          window.location.reload(); // Reload the page after successful deletion
+          window.location.reload();
         }
       } catch (error) {
-        console.error("Error deleting message:", error);
+        console.error("Error occurred while canceling membership: ", error);
       }
-    }
-    modal.style.display = "none"; // Hide the modal
-  });
+      cancelMemberModal.style.display = "none";
+    });
 
-  // Handle the cancel click
-  cancelBtn.addEventListener("click", () => {
-    modal.style.display = "none"; // Hide the modal
-  });
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
 });

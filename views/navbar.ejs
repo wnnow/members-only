@@ -9,9 +9,26 @@
       <button id="post-message-toggle-btn" type="button">Post</button>
     </div>
 
+    <% if(!locals.user.membership_status) { %>
     <div class="navbar-links">
-      <button type="button">Update Membership</button>
+      <button id="update-member-toggle-btn" type="button">
+        Become a member
+      </button>
     </div>
+    <%} else if(locals.user.membership_status && !locals.user.is_admin) { %>
+    <div class="navbar-links">
+      <button id="cancel-member-toggle-btn" type="button">
+        Cancel Membership
+      </button>
+    </div>
+    <div class="navbar-links">
+      <button id="update-admin-toggle-btn" type="button">Become Admin</button>
+    </div>
+    <% }%> <% if(locals.user.membership_status && locals.user.is_admin) { %>
+    <div class="navbar-links">
+      <button id="cancel-admin-toggle-btn" type="button">Cancel Admin</button>
+    </div>
+    <% } %>
 
     <div class="navbar-links">
       <a href="/logout">Logout</a>

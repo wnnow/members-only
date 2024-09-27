@@ -8,32 +8,6 @@ const messageController = require("../controllers/messageController");
 const { validateSignUp } = require("../validators/validators");
 
 // TODO
-// post route
-// show message if username or password incorrect
-//if valid redirect to '/'
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-  })
-);
-
-//validate form
-//if valid redirect to '/login'
-router.post("/signup", validateSignUp, userController.signUpPost);
-
-// post message
-router.post("/create-message", messageController.addMessage);
-
-// become member or admin
-// show message when incorrect member or admin password
-// if valid redirect to '/member-successful'
-// if invalid redirect to '/member-failure'
-router.post("/member", (req, res, next) => {});
-
-router.delete("/delete-msg/:id", messageController.deleteMessage);
-// TODO
 // get route
 
 // check if user or member or not
@@ -66,5 +40,35 @@ router.get("/member", (req, res, next) => {});
 router.get("/member-successful", (req, res, next) => {});
 
 router.get("/member-failure", (req, res, next) => {});
+
+// TODO
+// post route
+// show message if username or password incorrect
+//if valid redirect to '/'
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  })
+);
+
+//validate form
+//if valid redirect to '/login'
+router.post("/signup", validateSignUp, userController.signUpPost);
+
+// post message
+router.post("/create-message", messageController.addMessage);
+
+// become member or admin
+// show message when incorrect member or admin password
+// if valid redirect to '/member-successful'
+// if invalid redirect to '/member-failure'
+router.post("/member", (req, res, next) => {});
+
+//put method
+router.put("/cancel-member/:id", userController.cancelMembershipPut);
+
+router.delete("/delete-msg/:id", messageController.deleteMessage);
 
 module.exports = router;

@@ -11,26 +11,6 @@ async function insertUser(firstName, lastName, username, password) {
   }
 }
 
-async function updateUsersMembership(params) {}
-async function testQuery() {
-  try {
-    // Query the information_schema to get the list of tables
-    const queryText = `
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public'
-    `;
-
-    const { rows } = await pgPool.query(queryText);
-    console.log("Tables in the database:", rows);
-    return rows;
-  } catch (err) {
-    console.error("Error occurred while querying the database:", err);
-  } finally {
-    await pgPool.end(); // Close the connection pool
-  }
-}
-
 async function getUser(username) {
   try {
     const { rows } = await pgPool.query(
@@ -42,7 +22,39 @@ async function getUser(username) {
     console.error("Error occurred while query user", err);
   }
 }
+
+async function updateMembership(id, membershipResult) {
+  try {
+    await pgPool.query(
+      `
+      UPDATE users
+      SET membership_status = $2
+      WHERE id = $1`,
+      [id, membershipResult]
+    );
+    console.log(`update success`);
+  } catch (err) {
+    console.error("Error occurred while updateMembership controller: ", err);
+  }
+}
+
+async function updateAdmin(id, adminResult) {
+  try {
+    await pgPool.query(
+      `
+      UPDATE users
+      SET is_admin = $2
+      WHERE id = $1`,
+      [id, adminResult]
+    );
+    console.log(`update success`);
+  } catch (err) {
+    console.error("Error occurred while updateMembership controller: ", err);
+  }
+}
 module.exports = {
   insertUser,
   getUser,
+  updateAdmin,
+  updateMembership,
 };
