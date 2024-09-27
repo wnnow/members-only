@@ -42,6 +42,7 @@ async function updateMembership(id, membershipResult) {
     console.error("Error occurred while updateMembership controller: ", err);
   }
 }
+
 async function updateAdmin(id, adminResult) {
   try {
     await pgPool.query(
@@ -67,10 +68,25 @@ async function deleteMessage(id) {
   }
 }
 
+async function insertMessage(title, text, creator_id) {
+  try {
+    await pgPool.query(
+      `
+      INSERT INTO messages (title,text,creator_id)
+      VALUES ($1,$2,$3)`,
+      [title, text, creator_id]
+    );
+    console.log(`insert success`);
+  } catch (err) {
+    console.error("Error occurred while inserting query message:", err);
+  }
+}
+
 module.exports = {
   getAllMessage,
   getMessagesAndUserInfo,
   updateMembership,
   updateAdmin,
   deleteMessage,
+  insertMessage,
 };

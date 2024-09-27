@@ -15,7 +15,7 @@
     <ul>
       <% messages.forEach((message) => { %>
       <li>
-        <% if(locals.user.is_admin) { %>
+        <% if(locals.user && locals.user.is_admin) { %>
 
         <span class="delete-btn" data-id="<%= message.id %>">&times;</span>
         <%}%>
@@ -40,7 +40,7 @@
       <div class="modal-content">
         <span class="close-btn">&times;</span>
         <form action="/create-message" method="POST">
-          <h2>New message</h2>
+          <h2>Create Post</h2>
           <div class="add-trainer-input-container">
             <label for="title">Title:</label>
             <input
@@ -49,6 +49,7 @@
               name="title"
               minlength="1"
               maxlength="50"
+              placeholder="What a nice weather"
               required
             />
           </div>
@@ -71,7 +72,7 @@
       </div>
     </div>
 
-    <% if(locals.user.is_admin) { %>
+    <% if(locals.user && locals.user.is_admin) { %>
     <div id="deleteConfirmationModal" class="modal">
       <div class="modal-content">
         <h2>Are you sure you want to delete this message?</h2>

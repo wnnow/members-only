@@ -23,6 +23,9 @@ router.post(
 //if valid redirect to '/login'
 router.post("/signup", validateSignUp, userController.signUpPost);
 
+// post message
+router.post("/create-message", messageController.addMessage);
+
 // become member or admin
 // show message when incorrect member or admin password
 // if valid redirect to '/member-successful'
