@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const postButton = document.getElementById("post-message-toggle-btn");
   const modal = document.getElementById("postMessageModal");
-  const closeBtn = document.querySelector(".close-btn");
+  const closeBtn = document.getElementById("close-post-btn");
 
   if (postButton && modal && closeBtn) {
     postButton.addEventListener("click", () => {
@@ -111,8 +111,74 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.addEventListener("click", (event) => {
-      if (event.target === modal) {
+      if (event.target === cancelMemberModal) {
         modal.style.display = "none";
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const joinMemberToggleFormBtn = document.getElementById(
+    "join-member-toggle-btn"
+  );
+  const joinMemberFormModal = document.getElementById(
+    "join-member-status-modal"
+  );
+  const closeBtn = document.getElementById("close-join-btn");
+  const cancelJoinMemberBtn = document.getElementById("cancel-join-member-btn");
+
+  const confirmJoinMemberBtn = document.getElementById(
+    "confirm-join-member-btn"
+  );
+  const memberCodeInput = document.getElementById("member_code");
+  const errorMessage = document.getElementById("join-member-error-msg");
+
+  if (
+    joinMemberToggleFormBtn &&
+    joinMemberFormModal &&
+    cancelJoinMemberBtn &&
+    memberCodeInput &&
+    confirmJoinMemberBtn &&
+    errorMessage &&
+    closeBtn
+  ) {
+    joinMemberToggleFormBtn.addEventListener("click", () => {
+      joinMemberFormModal.style.display = "block";
+    });
+
+    cancelJoinMemberBtn.addEventListener("click", () => {
+      joinMemberFormModal.style.display = "none";
+    });
+
+    closeBtn.addEventListener("click", () => {
+      joinMemberFormModal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+      if (event.target === joinMemberFormModal) {
+        joinMemberFormModal.style.display = "none";
+      }
+    });
+
+    confirmJoinMemberBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      console.log("memberCodeInput.value:", memberCodeInput.value);
+      const response = await fetch("/join-member", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ member_code: memberCodeInput.value }),
+      });
+
+      const result = await response.json();
+      console.log("result = ", result);
+      if (result.success) {
+        window.location.reload();
+      } else {
+        errorMessage.textContent = result.error;
+        errorMessage.style.display = "block";
       }
     });
   }

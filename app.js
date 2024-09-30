@@ -16,6 +16,7 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(
   expressSession({
     store: new pgSession({
@@ -38,11 +39,6 @@ app.use(authMiddleware);
 
 app.use((req, res, next) => {
   console.log(req.session);
-  // console.log("req.user: ", req.user);
-  // console.log("req.isUser: ", req.isUser);
-  // console.log("req.isMember: ", req.isMember);
-  // console.log("req.isAdmin: ", req.isAdmin);
-
   next();
 });
 

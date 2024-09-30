@@ -1,4 +1,5 @@
 const db = require("../database/queryMessage");
+require("dotenv").config();
 
 async function getMessages(req, res) {
   try {
@@ -7,6 +8,8 @@ async function getMessages(req, res) {
       title: "Board",
       messages: messages,
       user: req.user,
+      member_code: process.env.member_code,
+      error: null,
     });
   } catch (err) {
     console.error("Error occurred while getMessage controller:", err);

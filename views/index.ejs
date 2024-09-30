@@ -5,116 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
     <link rel="stylesheet" href="/css/style.css" />
-    <script src="/js/toggleForm.js" defer></script>
+    <script src="/js/handleForm.js" defer></script>
   </head>
   <body>
-    <%- include('navbar') %> <% if (locals.user) { %>
-    <h1>Welcome <%= user.first_name + ' ' + user.last_name %></h1>
-    <% } %>
+    <%- include('navbar') %>
+    <main>
+      <% if (locals.user) { %>
+      <h1>Welcome <%= user.first_name + ' ' + user.last_name %></h1>
+      <% } %> <% if(error) {%>
 
-    <ul>
-      <% messages.forEach((message) => { %>
-      <li>
-        <% if(locals.user && locals.user.is_admin) { %>
+      <h2><%=error %></h2>
+      <%}%>
+      <ul>
+        <% messages.forEach((message) => { %>
+        <li>
+          <% if(locals.user && locals.user.is_admin) { %>
 
-        <span class="delete-btn" data-id="<%= message.id %>">&times;</span>
-        <%}%>
-        <div>
-          <% if (locals.user && user.membership_status) { %> <%=
-          message.first_name + ' ' + message.last_name %> <% } else { %>
-          Anonymous <% } %>
-        </div>
-
-        <div>
-          <% if (locals.user && user.membership_status) { %> <%=
-          message.timestamp %> <% } else { %> YYYY-MM-DD XX:XX <% } %>
-        </div>
-
-        <div><%= message.title %></div>
-        <div><%= message.text %></div>
-      </li>
-      <% }) %>
-    </ul>
-
-    <div id="postMessageModal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <form action="/create-message" method="POST">
-          <h2>Create Post</h2>
-          <div class="add-trainer-input-container">
-            <label for="title">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              minlength="1"
-              maxlength="50"
-              placeholder="What a nice weather"
-              required
-            />
+          <span class="delete-btn" data-id="<%= message.id %>">&times;</span>
+          <%}%>
+          <div>
+            <% if (locals.user && user.membership_status) { %> <%=
+            message.first_name + ' ' + message.last_name %> <% } else { %>
+            Anonymous <% } %>
           </div>
 
           <div>
-            <label for="text">Text:</label>
-            <input
-              type="text"
-              id="text"
-              name="text"
-              minlength="1"
-              maxlength="128"
-              placeholder="What's on your mind?"
-              required
-            />
+            <% if (locals.user && user.membership_status) { %> <%=
+            message.timestamp %> <% } else { %> YYYY-MM-DD XX:XX <% } %>
           </div>
 
-          <button class="submit-btn" type="submit">Post</button>
-        </form>
+          <div><%= message.title %></div>
+          <div><%= message.text %></div>
+        </li>
+        <% }) %>
+      </ul>
+
+      <div id="postMessageModal" class="modal">
+        <div class="modal-content">
+          <span id="close-post-btn" class="close-btn">&times;</span>
+          <form action="/create-message" method="POST">
+            <h2>Create Post</h2>
+            <div class="add-trainer-input-container">
+              <label for="title">Title:</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                minlength="1"
+                maxlength="50"
+                placeholder="What a nice weather"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="text">Text:</label>
+              <input
+                type="text"
+                id="text"
+                name="text"
+                minlength="1"
+                maxlength="128"
+                placeholder="What's on your mind?"
+                required
+              />
+            </div>
+
+            <button class="submit-btn" type="submit">Post</button>
+          </form>
+        </div>
       </div>
-    </div>
-    <% if(locals.user && !locals.user.membership_status) { %>
-    <div id="join-member-status-modal" class="modal">
-      <div class="modal-content">
-        <form action="/member" method="POST">
-          <h2>Become a members</h2>
-          <label for="membership_status">Secret Code:</label>
-          <input
-            type="password"
-            name="membership_status"
-            id="membership_status"
-          />
+      <% if(locals.user && !locals.user.membership_status) { %>
+      <div id="join-member-status-modal" class="modal">
+        <div class="modal-content">
+          <span id="close-join-btn" class="close-btn">&times;</span>
+          <form action="/join-member" method="POST">
+            <h2>Become a members</h2>
+            <label for="member_code">Secret Code:</label>
+            <input type="password" name="member_code" id="member_code" />
+            <div id="join-member-error-msg"></div>
+            <div class="modal-buttons">
+              <button type="submit" id="confirm-join-member-btn">Submit</button>
+              <button type="button" id="cancel-join-member-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <% } %> <% if(locals.user && locals.user.membership_status) { %>
+      <div id="cancel-member-status-modal" class="modal">
+        <div class="modal-content">
+          <h2>Are you sure you want to cancel membership?</h2>
           <div class="modal-buttons">
-            <button type="submit" id="confirm-join-member-btn">Submit</button>
-            <button type="button" id="cancel-join-member-btn">Cancel</button>
+            <button
+              data-id="<%= locals.user.id %>"
+              type="submit"
+              id="confirm-canceling-member-btn"
+            >
+              Yes
+            </button>
+            <button type="button" id="cancel-canceling-member-btn">No</button>
           </div>
-        </form>
-      </div>
-    </div>
-    <% } %> <% if(locals.user && locals.user.membership_status) { %>
-    <div id="cancel-member-status-modal" class="modal">
-      <div class="modal-content">
-        <h2>Are you sure you want to cancel membership?</h2>
-        <div class="modal-buttons">
-          <button
-            data-id="<%= locals.user.id %>"
-            type="submit"
-            id="confirm-canceling-member-btn"
-          >
-            Yes
-          </button>
-          <button type="button" id="cancel-canceling-member-btn">No</button>
         </div>
       </div>
-    </div>
-    <% } %> <% if(locals.user && locals.user.is_admin) { %>
-    <div id="delete-confirmation-modal" class="modal">
-      <div class="modal-content">
-        <h2>Are you sure you want to delete this message?</h2>
-        <div class="modal-buttons">
-          <button id="confirm-delete-btn">Yes</button>
-          <button id="cancel-btn">No</button>
+      <% } %> <% if(locals.user && locals.user.is_admin) { %>
+      <div id="delete-confirmation-modal" class="modal">
+        <div class="modal-content">
+          <h2>Are you sure you want to delete this message?</h2>
+          <div class="modal-buttons">
+            <button id="confirm-delete-btn">Yes</button>
+            <button id="cancel-btn">No</button>
+          </div>
         </div>
       </div>
-    </div>
-    <% } %> <%- include('footer') %>
+      <% } %>
+    </main>
+    <%- include('footer') %>
   </body>
 </html>

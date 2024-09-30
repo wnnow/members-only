@@ -11,9 +11,7 @@
 
     <% if(!locals.user.membership_status) { %>
     <div class="navbar-links">
-      <button id="update-member-toggle-btn" type="button">
-        Become a member
-      </button>
+      <button id="join-member-toggle-btn" type="button">Become a member</button>
     </div>
     <%} else if(locals.user.membership_status && !locals.user.is_admin) { %>
     <div class="navbar-links">

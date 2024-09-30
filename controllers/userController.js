@@ -2,6 +2,7 @@ const db = require("../database/queryUsers");
 const bcrypt = require("bcryptjs");
 const validateFormData = require("../utils/validateFormData");
 const { validationResult } = require("express-validator");
+require("dotenv").config();
 
 function signUpGet(req, res, next) {
   res.render("signup", { title: "Sign up", error: null });
@@ -40,7 +41,6 @@ async function signUpPost(req, res, next) {
       formattedUsername,
       hashedPassword
     );
-    console.log(`insert user success`);
     res.redirect("/login");
   } catch (err) {
     console.error("Error occurred while signing up:", err);
@@ -69,9 +69,24 @@ async function cancelMembershipPut(req, res) {
   }
 }
 
+async function joinMemberPost(req, res) {
+  try {
+    const { member_code } = req.body;
+    if (member_code === process.env.MEMBER_CODE) {
+      await db.updateMembership(req.user.id, true);
+      return res.json({ success: true });
+    } else {
+      return res.json({ success: false, error: "Incorrect secret code" });
+    }
+  } catch (error) {
+    console.error("Error occur while joining membership:", error);
+  }
+}
+
 module.exports = {
   signUpPost,
   signUpGet,
   loginGet,
   cancelMembershipPut,
+  joinMemberPost,
 };
