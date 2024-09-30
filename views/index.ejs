@@ -107,6 +107,22 @@
           </div>
         </div>
       </div>
+
+      <div id="join-admin-modal" class="modal">
+        <div class="modal-content">
+          <span id="close-join-admin-btn" class="close-btn">&times;</span>
+          <form action="/join-admin" method="POST">
+            <h2>Become a Admin</h2>
+            <label for="admin-pwd">Password:</label>
+            <input type="password" name="admin_pwd" id="admin-pwd" />
+            <div id="join-admin-error-msg"></div>
+            <div class="modal-buttons">
+              <button type="submit" id="confirm-join-admin-btn">Submit</button>
+              <button type="button" id="cancel-join-admin-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
       <% } %> <% if(locals.user && locals.user.is_admin) { %>
       <div id="delete-confirmation-modal" class="modal">
         <div class="modal-content">
@@ -114,6 +130,22 @@
           <div class="modal-buttons">
             <button id="confirm-delete-btn">Yes</button>
             <button id="cancel-btn">No</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cancel-admin-modal" class="modal">
+        <div class="modal-content">
+          <h2>Are you sure you want to remove admin status?</h2>
+          <div class="modal-buttons">
+            <button
+              data-id="<%= locals.user.id %>"
+              type="submit"
+              id="confirm-canceling-admin-btn"
+            >
+              Yes
+            </button>
+            <button type="button" id="cancel-canceling-admin-btn">No</button>
           </div>
         </div>
       </div>

@@ -31,7 +31,8 @@
   cursor: pointer;
 }
 
-#join-member-error-msg {
+#join-member-error-msg,
+#join-admin-error-msg {
   display: none;
   color: red;
 }

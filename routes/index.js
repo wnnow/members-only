@@ -75,8 +75,11 @@ router.post("/create-message", messageController.addMessage);
 // if invalid redirect to '/member-failure'
 router.post("/join-member", userController.joinMemberPost);
 
+router.post("/join-admin", userController.joinAdminPost);
+
 //put method
 router.put("/cancel-member/:id", userController.cancelMembershipPut);
+router.put("/cancel-admin/:id", userController.cancelAdminPut);
 
 router.delete("/delete-msg/:id", messageController.deleteMessage);
 

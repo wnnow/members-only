@@ -53,9 +53,6 @@ async function signUpPost(req, res, next) {
 
 async function cancelMembershipPut(req, res) {
   try {
-    console.log("cancel req.user.id: === ", req.user.id);
-    console.log("cancel req.params === ", req.params);
-
     const { id } = req.params;
     if (req.user.id === parseInt(id)) {
       console.log("user id match");
@@ -83,10 +80,42 @@ async function joinMemberPost(req, res) {
   }
 }
 
+async function joinAdminPost(req, res) {
+  try {
+    const { admin_pwd } = req.body;
+    console.log("req.body = ", req.body);
+    if (admin_pwd === process.env.ADMIN_PASSWORD) {
+      await db.updateAdmin(req.user.id, true);
+      console.log("update success");
+      return res.json({ success: true });
+    } else {
+      return res.json({ success: false, error: "Incorrect password" });
+    }
+  } catch (error) {
+    console.error("Error occur while joining admin:", error);
+  }
+}
+
+async function cancelAdminPut(req, res) {
+  try {
+    const { id } = req.params;
+    if (req.user.id === parseInt(id)) {
+      console.log("user id match");
+      await db.updateAdmin(id, false);
+    }
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("Error occur while canceling membership");
+    res.status(500).json({ success: false, message: "An error occurred" });
+  }
+}
+
 module.exports = {
   signUpPost,
   signUpGet,
   loginGet,
-  cancelMembershipPut,
   joinMemberPost,
+  cancelMembershipPut,
+  joinAdminPost,
+  cancelAdminPut,
 };
