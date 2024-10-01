@@ -1,34 +1,245 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.welcome-user-message {
+  margin-bottom: 20px;
+}
+/* navbar */
+
+.navbar {
+  width: 100%;
+  background-color: #181818;
+  padding: 12px 20px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 35px;
+}
+
+.navbar-links-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.navbar-logo a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.navbar-links a,
+.navbar-links button {
+  color: #fff;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 10px;
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+}
+
+.navbar-toggle span {
+  background-color: #fff;
+  height: 3px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.navbar-links-container {
+  display: flex;
+}
+
+.navbar-links button,
+.navbar-links a {
+  font-size: 1em;
+}
+
+@media (max-width: 768px) {
+  .navbar-links-container {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #181818;
+    padding: 20px;
+    width: 200px;
+    border-radius: 8px;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-links-container.active {
+    display: flex;
+    z-index: 1000;
+  }
+
+  .navbar-links a,
+  .navbar-links button {
+    padding: 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  main ul {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+
+main form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+main h1 {
+  text-align: center;
+}
+
+main ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding-right: 4em;
+  padding-left: 4em;
+}
+
+main ul li {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* display: flex;
+  flex-direction: column; */
+}
+
+/* Modal  */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow: auto;
 }
 
 .modal-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .close-btn {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+  color: #888;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 24px;
   font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.close-btn:hover,
-.close-btn:focus {
-  color: black;
-  text-decoration: none;
+.close-btn:hover {
+  color: #333;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
+  width: 100%;
+}
+
+.message-info-container {
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute; /* Positioning to the top right */
+  top: 10px;
+  right: 10px;
+  background-color: #ff4d4d; /* Red background for delete button */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 5px 8px; /* Padding for the button */
+  font-size: 12px;
+}
+.message-header {
+  display: flex;
+  justify-content: space-between; /* Space between author and timestamp */
+  margin-bottom: 8px; /* Space below the header */
+}
+
+.message-author {
+  font-weight: bold; /* Bold font for the author's name */
+  color: #333; /* Dark color for the author's name */
+}
+
+.message-timestamp {
+  font-size: 0.9em; /* Slightly smaller font size for timestamp */
+  color: #888; /* Lighter color for the timestamp */
+}
+
+.message-title {
+  font-size: 1.2em; /* Larger font for the title */
+  margin: 5px 0; /* Space above and below the title */
+  color: #2c3e50; /* Dark color for title */
+}
+
+.message-body {
+  color: #555; /* Medium gray color for the message body */
+  line-height: 1.5; /* Increased line height for better readability */
 }
 
 #join-member-error-msg,
@@ -38,5 +249,149 @@
 }
 
 .error-login-msg {
+  margin-bottom: 10px;
   color: red;
+}
+
+/* Form within modals */
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.modal form label {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.modal form input[type="text"] {
+  margin-bottom: 20px;
+}
+
+.modal form input[type="text"],
+.modal form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#postMessageModal button {
+  width: 100%;
+  padding: 10px;
+  background-color: #5a67d8;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#postMessageModal button:hover {
+  background-color: #4c51bf;
+}
+
+.modal-buttons button:hover {
+  opacity: 0.9;
+}
+
+.modal-buttons button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+}
+
+.modal-buttons button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Error messages */
+.error-login-msg,
+#join-member-error-msg,
+#join-admin-error-msg {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  display: block;
+  text-align: center;
+}
+
+#confirm-delete-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+#cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.modal-buttons button:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+    margin: 10% auto;
+    padding: 20px;
+  }
+
+  .close-btn {
+    font-size: 20px;
+    right: 10px;
+    top: 10px;
+  }
+
+  .modal form input[type="text"],
+  .modal form input[type="password"] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+  }
+}
+
+/* Footer */
+footer {
+  background-color: #181818;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  height: 60px;
 }

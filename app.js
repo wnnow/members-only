@@ -37,11 +37,6 @@ app.use(passport.session());
 
 app.use(authMiddleware);
 
-app.use((req, res, next) => {
-  console.log(req.session);
-  next();
-});
-
 app.use("/", indexRouter);
 
 const PORT = process.env.PORT || 3000;

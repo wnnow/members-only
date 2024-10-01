@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/handleForm.js" defer></script>
   </head>
@@ -11,31 +12,35 @@
     <%- include('navbar') %>
     <main>
       <% if (locals.user) { %>
-      <h1>Welcome <%= user.first_name + ' ' + user.last_name %></h1>
+      <h1 class="welcome-user-message">
+        Welcome <%= user.first_name + ' ' + user.last_name %>
+      </h1>
       <% } %> <% if(error) {%>
 
       <h2><%=error %></h2>
       <%}%>
-      <ul>
+      <ul class="message-container">
         <% messages.forEach((message) => { %>
-        <li>
+        <li class="message-info-container">
           <% if(locals.user && locals.user.is_admin) { %>
 
           <span class="delete-btn" data-id="<%= message.id %>">&times;</span>
           <%}%>
-          <div>
-            <% if (locals.user && user.membership_status) { %> <%=
-            message.first_name + ' ' + message.last_name %> <% } else { %>
-            Anonymous <% } %>
+          <div class="message-header">
+            <div class="message-author">
+              <% if (locals.user && user.membership_status) { %> <%=
+              message.first_name + ' ' + message.last_name %> <% } else { %>
+              Anonymous <% } %>
+            </div>
+            <div message-timestamp>
+              <% if (locals.user && user.membership_status) { %>
+              <%=formatDate(message.timestamp ) %> <% } else { %> YYYY-MM-DD
+              XX:XX <% } %>
+            </div>
           </div>
 
-          <div>
-            <% if (locals.user && user.membership_status) { %> <%=
-            message.timestamp %> <% } else { %> YYYY-MM-DD XX:XX <% } %>
-          </div>
-
-          <div><%= message.title %></div>
-          <div><%= message.text %></div>
+          <div class="message-title"><%= message.title %></div>
+          <div class="message-body"><%= message.text %></div>
         </li>
         <% }) %>
       </ul>

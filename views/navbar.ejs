@@ -1,45 +1,56 @@
 <nav class="navbar">
   <div class="navbar-container">
+    <!-- Logo -->
     <div class="navbar-logo navbar-links">
       <a href="/">Home</a>
     </div>
-    <% if (locals.user) { %>
-    <!-- Check if user is logged in -->
-    <div class="navbar-links">
-      <button id="post-message-toggle-btn" type="button">Post</button>
+
+    <!-- Hamburger Menu Toggle -->
+    <div class="navbar-toggle" id="navbarToggle">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
 
-    <% if(!locals.user.membership_status) { %>
-    <div class="navbar-links">
-      <button id="join-member-toggle-btn" type="button">Become a member</button>
-    </div>
-    <%} else if(locals.user.membership_status && !locals.user.is_admin) { %>
-    <div class="navbar-links">
-      <button id="cancel-member-toggle-btn" type="button">
-        Cancel Membership
-      </button>
-    </div>
-    <div class="navbar-links">
-      <button id="update-admin-toggle-btn" type="button">Become Admin</button>
-    </div>
-    <% }%> <% if(locals.user.membership_status && locals.user.is_admin) { %>
-    <div class="navbar-links">
-      <button id="cancel-admin-toggle-btn" type="button">Cancel Admin</button>
-    </div>
-    <% } %>
+    <!-- Navbar Links -->
+    <div class="navbar-links-container" id="navbarLinks">
+      <% if (locals.user) { %>
+      <div class="navbar-links">
+        <button id="post-message-toggle-btn" type="button">Post</button>
+      </div>
 
-    <div class="navbar-links">
-      <a href="/logout">Logout</a>
-    </div>
-    <% } else { %>
-    <!-- If user is not logged in -->
-    <div class="navbar-links">
-      <a href="/login">Login</a>
-    </div>
+      <% if (!locals.user.membership_status) { %>
+      <div class="navbar-links">
+        <button id="join-member-toggle-btn" type="button">
+          Become a member
+        </button>
+      </div>
+      <% } else if (locals.user.membership_status && !locals.user.is_admin) { %>
+      <div class="navbar-links">
+        <button id="cancel-member-toggle-btn" type="button">
+          Cancel Membership
+        </button>
+      </div>
+      <div class="navbar-links">
+        <button id="update-admin-toggle-btn" type="button">Become Admin</button>
+      </div>
+      <% } %> <% if (locals.user.membership_status && locals.user.is_admin) { %>
+      <div class="navbar-links">
+        <button id="cancel-admin-toggle-btn" type="button">Cancel Admin</button>
+      </div>
+      <% } %>
 
-    <div class="navbar-links">
-      <a href="/signup">Sign Up</a>
+      <div class="navbar-links">
+        <a href="/logout">Logout</a>
+      </div>
+      <% } else { %>
+      <div class="navbar-links">
+        <a href="/login">Login</a>
+      </div>
+      <div class="navbar-links">
+        <a href="/signup">Sign Up</a>
+      </div>
+      <% } %>
     </div>
-    <% } %>
   </div>
 </nav>

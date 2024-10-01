@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (button) {
         button.addEventListener("click", () => {
           messageIdToDelete = button.getAttribute("data-id");
-          modal.style.display = "flex";
+          modal.style.display = "block";
         });
       }
     });
@@ -289,9 +289,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.addEventListener("click", (event) => {
-      if (event.target === cancelMemberModal) {
-        cancelMemberModal.style.display = "none";
+      if (event.target === cancelAdminModal) {
+        cancelAdminModal.style.display = "none";
       }
     });
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navbarToggle = document.getElementById("navbarToggle");
+  const navbarLinks = document.getElementById("navbarLinks");
+
+  navbarToggle.addEventListener("click", function () {
+    navbarLinks.classList.toggle("active");
+    navbarToggle.classList.toggle("toggle-active");
+  });
 });

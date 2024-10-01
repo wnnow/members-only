@@ -1,4 +1,5 @@
 const db = require("../database/queryMessage");
+const formatDate = require("../utils/dateFormat").formatDate;
 require("dotenv").config();
 
 async function getMessages(req, res) {
@@ -10,6 +11,7 @@ async function getMessages(req, res) {
       user: req.user,
       member_code: process.env.member_code,
       error: null,
+      formatDate: formatDate,
     });
   } catch (err) {
     console.error("Error occurred while getMessage controller:", err);
