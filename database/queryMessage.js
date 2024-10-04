@@ -46,7 +46,6 @@ async function insertMessage(title, text, creator_id) {
       VALUES ($1,$2,$3)`,
       [title, text, creator_id]
     );
-    console.log(`insert success`);
   } catch (err) {
     console.error("Error occurred while inserting query message:", err);
   }

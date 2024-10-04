@@ -32,7 +32,6 @@ async function updateMembership(id, membershipResult) {
       WHERE id = $1`,
       [id, membershipResult]
     );
-    console.log(`update success`);
   } catch (err) {
     console.error("Error occurred while updateMembership controller: ", err);
   }
@@ -47,7 +46,6 @@ async function updateAdmin(id, adminResult) {
       WHERE id = $1`,
       [id, adminResult]
     );
-    console.log(`update success`);
   } catch (err) {
     console.error("Error occurred while updateMembership controller: ", err);
   }

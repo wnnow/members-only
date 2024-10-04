@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     confirmJoinAdminBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-      console.log("adminPWDINPUT.value", adminPwdInput.value);
+
       const response = await fetch("/join-admin", {
         method: "POST",
         headers: {
